@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    alert("{{ messages[0] }}");
+                {% endif %}
+            {% endwith %}
+        });
+    </script>
+   <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('https://www.travelandleisure.com/thmb/SUVZlmLz2X0PsCzoF5bAfUaj430=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/TAL-header-tignes-france-ski-lift-SNOWSKIEURO0223-eebdc2935b314404981c8135a1721204.jpg') center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+        }
+        h3 {
+            text-align: center;
+            color: #000000;
+            font-size: 24px; /* Adjust the font size as needed */
+            margin: 10px auto 0; /* Add some top margin for spacing */
+            max-width: 800px;
+            background-color:  rgba(255, 255, 255, 0.8); /* Adjusted background color with transparency *//* Add a white background color */
+            padding: 10px; /* Add padding for better appearance */
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .itinerary {
+            background-color: rgba(255,255,255,0.8);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .itinerary h4 {
+            color: #3f90c6;
+            margin-bottom: 10px;
+        }
+
+        .itinerary p {
+            margin: 5px 0;
+            color: #000000;
+        }
+
+        .no-itineraries {
+            text-align: center;
+            color: #ffffff;
+            display: block;
+            margin: 40px auto; /* Add some top margin for spacing */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.8); /* Adjusted background color with transparency */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            background-color: rgba(238,238,238,0);
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #4136db;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: rgba(238,238,238,0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Itinerary Planner</h1>
+    </header>
+    <div class="container">
+        <nav>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('create_itinerary') }}">Create New Itinerary</a>
+            <a href="{{ url_for('suggestions') }}">View Suggestions</a>
+            <a href="{{ url_for('download_itineraries') }}">Download Itineraries</a>
+        </nav>
+        <h2>Welcome to your Itinerary Planner</h2>
+        </div>
+        <h3>Your Itineraries:</h3>
+        {% if itineraries %}
+            {% for itinerary in itineraries %}
+                <div class="itinerary">
+                    <h4>{{ itinerary.destination }}</h4>
+                    <p>Start Date: {{ itinerary.start_date }}</p>
+                    <p>End Date: {{ itinerary.end_date }}</p>
+                    <p>Number of Days: {{ itinerary.num_days }}</p>  <!-- New line -->
+                    <p>Description: {{ itinerary.description }}</p>
+                    <form method="POST" action="{{ url_for('delete_itinerary', id=itinerary.id) }}">
+                        <input type="submit" value="Delete">
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p><strong>You don't have any itineraries created yet. <a href="{{ url_for('create_itinerary') }}">Create your itinerary</a></p>
+        {% endif %}
+    </div>
+    <footer>
+        2024 Itinerary Planner. 
+    </footer>
+</body>
+</html>

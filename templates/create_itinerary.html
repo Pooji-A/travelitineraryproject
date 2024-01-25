@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Itinerary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://s27363.pcdn.co/wp-content/uploads/2021/01/Beautiful-for-Facebook.jpg.optimal.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            max-width: 400px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.4); 
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: rgba(238,238,238,0);
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#start_date, #end_date").change(function() {
+                var startDate = new Date($('#start_date').val());
+                var endDate = new Date($('#end_date').val());
+                if (startDate && endDate) {
+                    var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                    $('#num_days').text("Number of days planned: " + diffDays);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h2>Create Itinerary</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('create_itinerary') }}">
+                    <div class="form-group">
+                        <label for="destination">Destination:</label>
+                        <input type="text" class="form-control" id="destination" name="destination" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="start_date">Start Date:</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">End Date:</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" name="description" required></textarea>
+                    </div>
+                    <p id="num_days"></p>
+                    <button type="submit" class="btn btn-primary">Create Itinerary</button>
+                </form>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Back to Home</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        2024 Itinerary Planner.
+    </footer>
+</body>
+</html>

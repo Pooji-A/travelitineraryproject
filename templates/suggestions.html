@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Itinerary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://s27363.pcdn.co/wp-content/uploads/2021/01/Beautiful-for-Facebook.jpg.optimal.jpg'); 
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Keep the background fixed while scrolling */
+            height: 100vh;
+            margin: 0;
+            padding-top: 20px; /* Added padding to account for fixed navbar */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 600px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.7); 
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1; /* Ensure the form container appears above other elements */
+        }
+
+        .suggestions-container {
+            max-width: 600px;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .destination-button {
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #8dbaea;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            display: block;
+            text-decoration: none;
+            background-color: rgba(174, 242, 237, 0.7);
+        }
+
+        .destination-description {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .destination-description:target {
+            display: block;
+            position: fixed;
+            top: 60%;
+            right: 20%;
+            transform: translate(0%, -50%);
+            max-width: 400px;
+            width: 300%;
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 2; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: rgba(238,238,238,0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="suggestions-container">
+            <div class="card-header bg-info text-white">
+                <h2>Attractions: Suggestions</h2>
+            </div>
+            <div class="card-body">
+                {% for suggestion in suggestions %}
+                    <a href="#{{ suggestion.destination }}" class="destination-button">{{ suggestion.destination }}</a>
+                    <div id="{{ suggestion.destination }}" class="destination-description">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ suggestion.destination }}</h3>
+                                <p class="card-text">{{ suggestion.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        2024 Itinerary Planner.
+    </footer>
+</body>
+</html>

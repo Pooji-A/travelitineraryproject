@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Itineraries</title>
+</head>
+<body>
+    <h3>Your Itineraries:</h3>
+    {% if itineraries %}
+        {% for itinerary in itineraries %}
+            <div class="itinerary">
+                <h4>{{ itinerary.destination }}</h4>
+                <p>Start Date: {{ itinerary.start_date }}</p>
+                <p>End Date: {{ itinerary.end_date }}</p>
+                <p>Description: {{ itinerary.description }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You don't have any itineraries created yet.</p>
+    {% endif %}
+</body>
+</html>
